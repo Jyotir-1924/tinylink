@@ -9,26 +9,21 @@ interface PageProps {
 
 export default async function RedirectPage({ params }: PageProps) {
   const { code } = await params;
+  
   if (!code || typeof code !== "string") {
     notFound();
   }
-  const url = await prisma.url.findUnique({
-    where: {
-      shortCode: code,
+
+  const url = await prisma.url.update({
+    where: { shortCode: code },
+    data: {
+      clickCount: { increment: 1 },
     },
-  });
+  }).catch(() => null);
+
   if (!url) {
     notFound();
   }
-  await prisma.url.update({
-    where: {
-      shortCode: code,
-    },
-    data: {
-      clickCount: {
-        increment: 1,
-      },
-    },
-  });
+
   redirect(url.originalUrl);
 }

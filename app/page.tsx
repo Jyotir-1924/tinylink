@@ -9,12 +9,15 @@ export default function Home() {
   const [shortUrl, setShortUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [error, setError] = useState("");
 
   const handleShorten = async () => {
     if (!url) return;
+    
     setLoading(true);
     setShortUrl("");
     setCopied(false);
+    setError("");
 
     try {
       const res = await fetch("/api/shorten", {
@@ -29,7 +32,11 @@ export default function Home() {
 
       if (res.ok) {
         setShortUrl(`${window.location.origin}/${data.shortCode}`);
+      } else {
+        setError(data.error || "Failed to shorten URL");
       }
+    } catch (err) {
+      setError("Network error. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -38,7 +45,6 @@ export default function Home() {
   const handleCopy = async () => {
     await navigator.clipboard.writeText(shortUrl);
     setCopied(true);
-
     setTimeout(() => setCopied(false), 2000);
   };
 
@@ -51,17 +57,23 @@ export default function Home() {
           placeholder="https://example.com"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleShorten()}
         />
-        <Button onClick={handleShorten} disabled={loading}>
-          {loading ? "..." : "Shorten"}
+        <Button onClick={handleShorten} disabled={loading || !url}>
+          {loading ? "Shortening..." : "Shorten"}
         </Button>
       </div>
+
+      {error && (
+        <p className="text-sm text-red-600">{error}</p>
+      )}
 
       {shortUrl && (
         <div className="flex items-center gap-2 text-sm">
           <a
             href={shortUrl}
             target="_blank"
+            rel="noopener noreferrer"
             className="text-blue-600 underline"
           >
             {shortUrl}
