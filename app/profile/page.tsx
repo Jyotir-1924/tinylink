@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
-import SignOutButton from "@/components/sign-out-button";
+import SignOutButton from "@/components/ui/sign-out-button";
 import { Button } from "@/components/ui/button";
 
 export default async function ProfilePage() {
@@ -62,7 +62,7 @@ export default async function ProfilePage() {
                   </span>
                 </div>
               )}
-              <div className="absolute -bottom-2 -right-2 bg-green-500 w-6 h-6 rounded-full border-4 border-white"></div>
+              <div className="absolute bottom-0 right-0 bg-green-500 w-6 h-6 rounded-full border-4 border-white"></div>
             </div>
 
             <div className="text-center md:text-left flex-1">

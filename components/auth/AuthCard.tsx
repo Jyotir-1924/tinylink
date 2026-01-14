@@ -49,9 +49,11 @@ export default function AuthCard() {
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-linear-to-br from-blue-50 to-indigo-100 px-4">
-      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl">
-        <h1 className="text-3xl font-bold text-center mb-2">TinyLink</h1>
+    <main className="min-h-screen flex items-center justify-center app-bg">
+      <div className="w-full max-w-md bg-transparent p-8 rounded-2xl shadow-xl">
+        <h1 className="text-6xl font-extrabold text-center mb-2 gradient-text ">
+          TinyLink
+        </h1>
         <p className="text-center text-gray-600 mb-6">
           Shorten URLs with analytics
         </p>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+
 import { Button } from "@/components/ui/button";
 
 export default function ShortUrlResult({
@@ -19,27 +20,31 @@ export default function ShortUrlResult({
   };
 
   return (
-    <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-md">
-      <p className="text-sm font-medium mb-2">Your shortened URL:</p>
+    <div className="mt-6 p-5 rounded-xl bg-white/10 backdrop-blur-xl border border-white/20 shadow-[0_0_30px_rgba(0,255,200,0.15)]">
+      <p className="text-sm font-medium text-white/70 mb-2">
+        Your shortened URL
+      </p>
 
-      <div className="flex items-center gap-2 mb-2">
+      <div className="flex items-center gap-3">
         <a
           href={shortUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-blue-600 underline flex-1 truncate"
+          className="flex-1 truncate text-lg font-medium gradient-text hover:underline"
         >
           {shortUrl}
         </a>
 
-        <Button variant="outline" size="sm" onClick={handleCopy}>
-          {copied ? "Copied!" : "Copy"}
+        <Button
+          onClick={handleCopy}
+          className="bg-white/10 border border-white/20 text-white hover:bg-white/20"
+          size="sm"
+        >
+          {copied ? "Copied" : "Copy"}
         </Button>
       </div>
 
-      <p className="text-xs text-gray-600">
-        Expires: {expiresAt}
-      </p>
+      <p className="mt-2 text-xs text-white/50">Expires {expiresAt}</p>
     </div>
   );
 }

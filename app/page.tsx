@@ -1,31 +1,17 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import HomePage from "@/components/home/HomePage";
 import AuthCard from "@/components/auth/AuthCard";
-import AppHeader from "@/components/layout/AppHeader";
-import ShortenForm from "@/components/shortener/ShortenForm";
+import { useSession } from "next-auth/react";
 
 export default function Home() {
-  const { data: session, status } = useSession();
-
-  if (status === "loading") {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        Loading...
-      </div>
-    );
-  }
-
-  if (!session) {
-    return <AuthCard />;
-  }
+  const { data: session } = useSession();
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <AppHeader />
-      <div className="flex justify-center py-10">
-        <ShortenForm />
-      </div>
+    <div className="app-bg">
+      <div className="app-content pt-20">
+        {session ? <HomePage /> : <AuthCard />}
+        </div>
     </div>
   );
 }

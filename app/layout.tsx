@@ -1,10 +1,15 @@
 import type { Metadata } from "next";
-import { Manrope } from "next/font/google";
+
+import { Sora } from "next/font/google";
+
 import SessionProvider from "@/components/providers/session-provider";
+import Navbar from "@/components/layout/Navbar";
+
 import "./globals.css";
 
-const manrope = Manrope({
+const sora = Sora({
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -16,12 +21,15 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
-}>) {
+    children: React.ReactNode;
+  }>) {
   return (
     <html lang="en">
-      <body className={manrope.className}>
-        <SessionProvider>{children}</SessionProvider>
+      <body className={`${sora.className} bg-black text-white`}>
+        <SessionProvider>
+          <Navbar />
+          <div>{children}</div>
+        </SessionProvider>
       </body>
     </html>
   );

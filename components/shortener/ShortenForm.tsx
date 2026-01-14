@@ -49,11 +49,9 @@ export default function ShortenForm() {
   };
 
   return (
-    <div className="w-full max-w-2xl bg-white rounded-2xl shadow-xl p-8">
-      <h2 className="text-3xl font-bold mb-2 text-center">
-        Shorten your URL
-      </h2>
-      <p className="text-center text-gray-600 mb-8">
+    <div className="w-full max-w-2xl rounded-2xl p-8 bg-white/10 backdrop-blur-xl border border-white/20 shadow-[0_0_40px_rgba(0,255,180,0.15)]">
+      <h2 className="text-3xl font-bold mb-2 text-center">Shorten your URL</h2>
+      <p className="text-center text-white/60 mb-8">
         Links expire after 3 days
       </p>
 
@@ -73,7 +71,7 @@ export default function ShortenForm() {
         />
 
         <Button
-          className="w-full"
+          className="w-1/2 mx-auto block"
           onClick={handleShorten}
           disabled={loading}
         >
@@ -87,9 +85,7 @@ export default function ShortenForm() {
         </div>
       )}
 
-      {shortUrl && (
-        <ShortUrlResult shortUrl={shortUrl} expiresAt={expiresAt} />
-      )}
+      {shortUrl && <ShortUrlResult shortUrl={shortUrl} expiresAt={expiresAt} />}
     </div>
   );
 }
