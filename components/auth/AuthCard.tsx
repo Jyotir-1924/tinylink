@@ -4,6 +4,7 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { FcGoogle } from "react-icons/fc";
 
 export default function AuthCard() {
   const [mode, setMode] = useState<"signin" | "signup">("signin");
@@ -26,6 +27,7 @@ export default function AuthCard() {
         });
 
         const data = await res.json();
+
         if (!res.ok) {
           setError(data.error || "Registration failed");
           return;
@@ -51,30 +53,36 @@ export default function AuthCard() {
   return (
     <main className="min-h-screen flex items-center justify-center app-bg">
       <div className="w-full max-w-md bg-transparent p-8 rounded-2xl shadow-xl">
-        <h1 className="text-6xl font-extrabold text-center mb-2 gradient-text ">
+        <h1 className="text-6xl font-extrabold text-center mb-2 gradient-text">
           TinyLink
         </h1>
+
         <p className="text-center text-gray-600 mb-6">
           Shorten URLs with analytics
         </p>
-
         <div className="flex gap-2 mb-6">
           <Button
-            variant={mode === "signin" ? "default" : "outline"}
-            className="flex-1"
             onClick={() => setMode("signin")}
+            className={`flex-1 border transition ${
+              mode === "signin"
+                ? "bg-white text-black border-black hover:bg-gray-100"
+                : "bg-black text-white border-white/50"
+            }`}
           >
             Sign In
           </Button>
+
           <Button
-            variant={mode === "signup" ? "default" : "outline"}
-            className="flex-1"
             onClick={() => setMode("signup")}
+            className={`flex-1 border transition ${
+              mode === "signup"
+                ? "bg-white text-black border-black hover:bg-gray-100"
+                : "bg-black text-white border-white/50"
+            }`}
           >
             Sign Up
           </Button>
         </div>
-
         <div className="space-y-4">
           {mode === "signup" && (
             <Input
@@ -100,19 +108,23 @@ export default function AuthCard() {
 
           {error && <p className="text-sm text-red-600">{error}</p>}
 
-          <Button onClick={handleAuth} className="w-full" disabled={loading}>
+          <Button
+            onClick={handleAuth}
+            className=" w-full bg-white/10 text-white border border-transparent transition-all hover:bg-white hover:text-black"
+            disabled={loading}
+          >
             {loading
               ? "Please wait..."
               : mode === "signin"
-              ? "Sign In"
-              : "Sign Up"}
+                ? "Sign In"
+                : "Sign Up"}
           </Button>
 
           <Button
-            variant="outline"
-            className="w-full"
             onClick={() => signIn("google")}
+            className=" w-full bg-white/10 text-white border border-transparent transition-all hover:bg-white hover:text-black"
           >
+            <FcGoogle size={20} />
             Continue with Google
           </Button>
         </div>
