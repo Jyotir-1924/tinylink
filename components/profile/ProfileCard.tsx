@@ -5,7 +5,6 @@ export default function ProfileCard({ user }: { user: any }) {
   return (
     <div className="w-full rounded-2xl p-6 bg-white/10 backdrop-blur-xl border border-white/20 shadow-[0_0_40px_rgba(0,255,180,0.12)] mb-10">
       <div className="flex flex-col sm:flex-row items-center gap-6">
-        {/* Avatar */}
         {user.image ? (
           <Image
             src={user.image}
@@ -21,14 +20,12 @@ export default function ProfileCard({ user }: { user: any }) {
             </span>
           </div>
         )}
-
-        {/* User Info */}
+        
         <div className="flex-1 text-center sm:text-left">
           <h2 className="text-3xl font-bold text-white mb-1">{user.name}</h2>
           <p className="text-white/60">{user.email}</p>
         </div>
 
-        {/* Logout */}
         <SignOutButton />
       </div>
     </div>

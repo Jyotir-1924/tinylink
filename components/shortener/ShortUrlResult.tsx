@@ -30,7 +30,7 @@ export default function ShortUrlResult({
           href={shortUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 truncate text-lg font-medium gradient-text hover:underline"
+          className="flex-1 truncate text-lg text-blue-400 font-medium hover:underline"
         >
           {shortUrl}
         </a>
@@ -44,7 +44,7 @@ export default function ShortUrlResult({
         </Button>
       </div>
 
-      <p className="mt-2 text-xs text-white/50">Expires {expiresAt}</p>
+      <p className="mt-2 text-xs text-white/50">Expires: {expiresAt}</p>
     </div>
   );
 }

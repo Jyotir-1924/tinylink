@@ -5,8 +5,11 @@ import { prisma } from "@/lib/prisma";
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
+  const params = await context.params;
+  const id = params.id;
+
   const session = await getServerSession(authOptions);
 
   if (!session?.user?.id) {
@@ -17,9 +20,8 @@ export async function DELETE(
   }
 
   try {
-    // Make sure the link belongs to the user
     const link = await prisma.url.findUnique({
-      where: { id: params.id },
+      where: { id },
     });
 
     if (!link || link.userId !== session.user.id) {
@@ -30,7 +32,7 @@ export async function DELETE(
     }
 
     await prisma.url.delete({
-      where: { id: params.id },
+      where: { id },
     });
 
     return NextResponse.json({ success: true });

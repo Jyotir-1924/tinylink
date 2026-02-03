@@ -24,7 +24,7 @@ export default async function ProfilePage() {
 
   return (
     <main className="min-h-screen app-bg flex items-center px-6">
-      <div className="w-full max-w-7xl mx-auto">
+      <div className="w-full max-w-7xl mx-auto mt-14">
         <ProfileCard user={session.user} />
 
         <ProfileStats

@@ -21,7 +21,7 @@ export default function CreatePage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center app-bg px-6">
+    <div className="min-h-screen flex items-start justify-center app-bg px-6 pt-36 pb-12">
       <ShortenForm />
     </div>
   );

@@ -1,23 +1,25 @@
 "use client";
 
-import { FiCopy, FiTrash2 } from "react-icons/fi";
-
-const handleCopy = async (shortCode: string) => {
-  const fullUrl = `${window.location.origin}/${shortCode}`;
-  await navigator.clipboard.writeText(fullUrl);
-};
-
-const handleDelete = async (id: string) => {
-  if (!confirm("Delete this link?")) return;
-
-  await fetch(`/api/links/${id}`, {
-    method: "DELETE",
-  });
-
-  window.location.reload();
-};
+import { useState } from "react";
+import { FiCopy, FiTrash2, FiCheck, FiExternalLink } from "react-icons/fi";
 
 export default function ProfileLinksTable({ urls }: { urls: any[] }) {
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  const handleCopy = async (shortCode: string, id: string) => {
+    const fullUrl = `${window.location.origin}/${shortCode}`;
+    await navigator.clipboard.writeText(fullUrl);
+    setCopiedId(id);
+    setTimeout(() => setCopiedId(null), 1500);
+  };
+
+  const handleDelete = async (id: string) => {
+    if (!confirm("Delete this link?")) return;
+
+    await fetch(`/api/links/${id}`, { method: "DELETE" });
+    window.location.reload();
+  };
+
   return (
     <div className="rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 shadow-[0_0_40px_rgba(0,255,180,0.12)] overflow-hidden">
       <div className="px-6 py-4 border-b border-white/20">
@@ -48,8 +50,20 @@ export default function ProfileLinksTable({ urls }: { urls: any[] }) {
                     expired ? "opacity-50" : ""
                   }`}
                 >
-                  <td className="px-6 py-4 font-bold text-blue-400 ">
-                    {url.shortCode}
+                  <td className="px-6 py-4 font-bold">
+                    <a
+                      href={`/${url.shortCode}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group inline-flex items-center gap-1 text-blue-400 hover:text-blue-300 transition"
+                      title="Open short link"
+                    >
+                      {url.shortCode}
+                      <FiExternalLink
+                        size={14}
+                        className="opacity-0 group-hover:opacity-100 transition"
+                      />
+                    </a>
                   </td>
 
                   <td className="px-6 py-4 max-w-xs truncate">
@@ -80,30 +94,26 @@ export default function ProfileLinksTable({ urls }: { urls: any[] }) {
 
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-4">
-                      {/* Copy */}
                       <button
-                        onClick={() => handleCopy(url.shortCode)}
-                        title="Copy link"
-                        className="
-        text-white/70
-        hover:text-white
-        transition
-        hover:scale-110
-      "
+                        onClick={() => handleCopy(url.shortCode, url.id)}
+                        className="transition hover:scale-110"
                       >
-                        <FiCopy size={18} />
+                        {copiedId === url.id ? (
+                          <FiCheck
+                            className="text-green-400 drop-shadow-[0_0_6px_rgba(34,197,94,0.8)]"
+                            size={18}
+                          />
+                        ) : (
+                          <FiCopy
+                            className="text-white/70 hover:text-white"
+                            size={18}
+                          />
+                        )}
                       </button>
 
-                      {/* Delete */}
                       <button
                         onClick={() => handleDelete(url.id)}
-                        title="Delete link"
-                        className="
-        text-red-400
-        hover:text-red-500
-        transition
-        hover:scale-110
-      "
+                        className="text-red-400 hover:text-red-500 transition hover:scale-110"
                       >
                         <FiTrash2 size={18} />
                       </button>

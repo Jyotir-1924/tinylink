@@ -1,5 +1,4 @@
 "use client";
-import { useSession } from "next-auth/react";
 import Hero from "@/components/sections/Hero";
 import Features from "../sections/Features";
 

@@ -12,6 +12,7 @@ export default function ShortenForm() {
   const [expiresAt, setExpiresAt] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [expiresAtInput, setExpiresAtInput] = useState("");
 
   const handleShorten = async () => {
     if (!url) return;
@@ -27,6 +28,7 @@ export default function ShortenForm() {
         body: JSON.stringify({
           url,
           customCode: customCode || undefined,
+          expiresAt: expiresAtInput || undefined,
         }),
       });
 
@@ -55,20 +57,45 @@ export default function ShortenForm() {
         Links expire after 3 days
       </p>
 
-      <div className="space-y-4">
-        <Input
-          placeholder="https://example.com/long-url"
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && handleShorten()}
-        />
+      <div className="space-y-8">
+        <div className="space-y-2">
+          <p className="text-sm text-white">
+            Paste a long URL below and get a short, shareable link instantly.
+          </p>
+          <Input
+            placeholder="https://example.com/long-url"
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleShorten()}
+          />
+        </div>
 
-        <Input
-          placeholder="Custom code (optional)"
-          value={customCode}
-          onChange={(e) => setCustomCode(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && handleShorten()}
-        />
+        <div className="space-y-2">
+          <p className="text-sm text-white">
+            Want a custom short code? Letters and numbers only !!
+          </p>
+          <Input
+            placeholder="Custom code (optional)"
+            value={customCode}
+            onChange={(e) => setCustomCode(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleShorten()}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <p className="text-xs text-white/40">
+            Optional: choose when this link should expire
+          </p>
+
+          <div className="relative">
+            <Input
+              type="datetime-local"
+              value={expiresAtInput}
+              onChange={(e) => setExpiresAtInput(e.target.value)}
+              className="text-white border-white focus:border-cyan-400 focus:ring-cyan-400/30 [&::-webkit-calendar-picker-indicator]:invert [&::-webkit-calendar-picker-indicator]:opacity-60 [&::-webkit-calendar-picker-indicator]:hover:opacity-100 "
+            />
+          </div>
+        </div>
 
         <Button
           className="w-1/2 mx-auto block"

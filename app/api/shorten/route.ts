@@ -17,13 +17,21 @@ export async function POST(req: Request) {
         },
         {
           status: 401,
-        }
+        },
       );
     }
 
     const body = await req.json();
 
-    const { url, customCode } = shortenUrlSchema.parse(body);
+    if (body.expiresAt) {
+      body.expiresAt = new Date(body.expiresAt).toISOString();
+    }
+
+    const {
+      url,
+      customCode,
+      expiresAt: expiresAtInput,
+    } = shortenUrlSchema.parse(body);
 
     const shortCode = customCode || nanoid(7);
 
@@ -41,13 +49,27 @@ export async function POST(req: Request) {
           },
           {
             status: 409,
-          }
+          },
         );
       }
     }
 
-    const expiresAt = new Date();
-    expiresAt.setDate(expiresAt.getDate() + 3);
+    let expiresAt: Date;
+
+    if (expiresAtInput) {
+      expiresAt = new Date(expiresAtInput);
+
+      if (isNaN(expiresAt.getTime()) || expiresAt.getTime() <= Date.now()) {
+        console.log("Invalid expiration date provided:", expiresAtInput);
+        return NextResponse.json(
+          { error: "Expiration date must be in the future" },
+          { status: 400 },
+        );
+      }
+    } else {
+      expiresAt = new Date();
+      expiresAt.setDate(expiresAt.getDate() + 3);
+    }
 
     const shortUrl = await prisma.url.create({
       data: {
@@ -67,10 +89,11 @@ export async function POST(req: Request) {
       },
       {
         status: 201,
-      }
+      },
     );
   } catch (error) {
     if (error instanceof z.ZodError) {
+      console.log("Validation error:", error.issues);
       return NextResponse.json(
         {
           error: "Invalid input",
@@ -78,7 +101,7 @@ export async function POST(req: Request) {
         },
         {
           status: 400,
-        }
+        },
       );
     }
 
@@ -89,7 +112,7 @@ export async function POST(req: Request) {
         },
         {
           status: 500,
-        }
+        },
       );
     }
 
@@ -101,7 +124,7 @@ export async function POST(req: Request) {
       },
       {
         status: 500,
-      }
+      },
     );
   }
 }

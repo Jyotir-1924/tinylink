@@ -3,7 +3,6 @@
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 
-import { Button } from "@/components/ui/button";
 
 export default function Navbar() {
   const { data: session } = useSession();
@@ -24,36 +23,13 @@ export default function Navbar() {
             </span>
           </Link>
 
-          <Link href="/statistics">
-            <span className="text-m font-bold hover:text-white transition">
-              Statistics
-            </span>
-          </Link>
-
-          {session ? (
+          {session && 
             <Link href="/profile">
               <span className="text-m font-bold hover:text-white transition">
                 Profile
               </span>
             </Link>
-          ) : (
-            <div className="flex items-center gap-3">
-              <Link href="/signin">
-                <Button
-                  variant="ghost"
-                  className="text-white hover:bg-white/10"
-                >
-                  Sign in
-                </Button>
-              </Link>
-
-              <Link href="/signup">
-                <Button className="bg-white text-black hover:bg-white/90">
-                  Sign up
-                </Button>
-              </Link>
-            </div>
-          )}
+           }
         </div>
       </div>
     </nav>

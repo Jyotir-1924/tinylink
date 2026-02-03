@@ -52,7 +52,7 @@ export default function AuthCard() {
 
   return (
     <main className="min-h-screen flex items-center justify-center app-bg">
-      <div className="w-full max-w-md bg-transparent p-8 rounded-2xl shadow-xl">
+      <div className="w-full max-w-md bg-transparent p-8 rounded-2xl shadow-xl border border-white/20">
         <h1 className="text-6xl font-extrabold text-center mb-2 gradient-text">
           TinyLink
         </h1>
