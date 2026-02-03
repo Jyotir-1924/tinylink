@@ -21,7 +21,7 @@ export default function ProfileLinksTable({ urls }: { urls: any[] }) {
   };
 
   return (
-    <div className="rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 shadow-[0_0_40px_rgba(0,255,180,0.12)] overflow-hidden">
+    <div className="rounded-2xl mb-10 bg-white/10 backdrop-blur-xl border border-white/20 shadow-[0_0_40px_rgba(0,255,180,0.12)] overflow-hidden">
       <div className="px-6 py-4 border-b border-white/20">
         <h3 className="text-xl font-semibold text-white">Your Links</h3>
       </div>

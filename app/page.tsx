@@ -8,10 +8,10 @@ export default function Home() {
   const { data: session } = useSession();
 
   return (
-    <div className="app-bg">
-      <div className="app-content pt-20">
+    <div className="app-bg min-h-screen">
+      <div className="pt-24">
         {session ? <HomePage /> : <AuthCard />}
-        </div>
+      </div>
     </div>
   );
 }

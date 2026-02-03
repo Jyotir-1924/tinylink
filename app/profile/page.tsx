@@ -23,8 +23,9 @@ export default async function ProfilePage() {
   const expired = urls.length - active;
 
   return (
-    <main className="min-h-screen app-bg flex items-center px-6">
-      <div className="w-full max-w-7xl mx-auto mt-14">
+    <main className="min-h-screen app-bg px-4 md:px-6">
+      <div className="w-full max-w-7xl mx-auto pt-24 space-y-8 md:space-y-10">
+
         <ProfileCard user={session.user} />
 
         <ProfileStats

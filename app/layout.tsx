@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-
 import { Sora } from "next/font/google";
 
 import SessionProvider from "@/components/providers/session-provider";
 import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 
 import "./globals.css";
 
@@ -21,14 +21,19 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-    children: React.ReactNode;
-  }>) {
+  children: React.ReactNode;
+}>) {
   return (
     <html lang="en">
-      <body className={`${sora.className} bg-black text-white`}>
+      <body className={`${sora.className} bg-black text-white min-h-screen flex flex-col`}>
         <SessionProvider>
           <Navbar />
-          <div>{children}</div>
+
+          <main className="flex-1">
+            {children}
+          </main>
+
+          <Footer />
         </SessionProvider>
       </body>
     </html>
